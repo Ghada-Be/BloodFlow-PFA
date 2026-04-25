@@ -1,0 +1,57 @@
+version: '3.8'
+
+# ============================================================
+# docker-compose.yml — BloodFlow Medical Service
+# ============================================================
+
+services:
+
+  postgres-medical:
+    image: postgres:15-alpine
+    container_name: bloodflow-medical-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-bloodflow_medical}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5434:5432"   # port 5434 pour éviter conflit avec MS1 (5432) et MS2 (5433)
+    volumes:
+      - postgres_medical_data:/var/lib/postgresql/data
+    networks:
+      - bloodflow-medical-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-bloodflow_medical}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bloodflow-medical:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bloodflow-medical-app
+    restart: unless-stopped
+    depends_on:
+      postgres-medical:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+      DB_HOST: postgres-medical
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-bloodflow_medical}
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      JWT_SECRET: ${JWT_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    ports:
+      - "8083:8083"
+    networks:
+      - bloodflow-medical-network
+
+volumes:
+  postgres_medical_data:
+    driver: local
+
+networks:
+  bloodflow-medical-network:
+    driver: bridge
