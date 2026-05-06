@@ -1,0 +1,24 @@
+# Java / Maven
+target/
+*.class
+
+# IntelliJ
+.idea/
+*.iml
+
+# Visual Studio / .NET
+.vs/
+bin/
+obj/
+
+# Node / React
+node_modules/
+dist/
+build/
+
+# Environment files
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
