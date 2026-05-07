@@ -1,0 +1,13 @@
+com\bloodflow\medical\repository\CommandeSangRepositoryTest.class
+com\bloodflow\medical\service\AnalyseSangServiceTest.class
+com\bloodflow\medical\service\CommandeSangServiceTest.class
+com\bloodflow\medical\controller\CommandeSangControllerTest.class
+com\bloodflow\medical\integration\CommandeSangIntegrationTest.class
+com\bloodflow\medical\controller\AnalyseSangControllerTest.class
+com\bloodflow\medical\MedicalServiceApplicationTests.class
+com\bloodflow\medical\integration\AnalyseSangIntegrationTest.class
+com\bloodflow\medical\repository\AnalyseSangRepositoryTest.class
+com\bloodflow\medical\repository\PatientRepositoryTest.class
+com\bloodflow\medical\service\PatientServiceTest.class
+com\bloodflow\medical\controller\PatientControllerTest.class
+com\bloodflow\medical\integration\PatientIntegrationTest.class

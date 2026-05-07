@@ -1,0 +1,66 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: bloodflow-medical-service
+
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/bloodflow_medical?sslmode=disable
+    username: bloodflow_user
+    password: Malak03
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=300s
+
+jwt:
+  secret: bloodflow-secret-key-for-demo-change-this-later-123456789123456789
+  issuer: bloodflow-auth-service
+  audience: bloodflow-platform
+
+cors:
+  allowed-origins:
+    - http://localhost:5173
+    - http://127.0.0.1:5173
+    - http://localhost:5174
+    - http://127.0.0.1:5174
+    - http://localhost:3000
+    - http://127.0.0.1:3000
+
+ms1:
+  auth:
+    url: http://localhost:8081
+
+ms3:
+  supervision:
+    url: http://localhost:8083
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    url: /v3/api-docs
+    operations-sorter: method
+    tags-sorter: alpha
+
+logging:
+  level:
+    root: INFO
+    com.bloodflow.medical: DEBUG
+    org.springdoc: DEBUG
