@@ -1,0 +1,8 @@
+{
+  "dependencies_to_add": {
+    "@microsoft/signalr": "latest",
+    "react-toastify": "latest",
+    "axios": "latest"
+  },
+  "install_command": "npm install @microsoft/signalr react-toastify axios"
+}
