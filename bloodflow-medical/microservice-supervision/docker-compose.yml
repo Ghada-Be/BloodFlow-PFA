@@ -1,0 +1,36 @@
+services:
+  mysql-ms3:
+    image: mysql:8.0
+    container_name: bloodflow-ms3-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: bloodflow_ms3
+      MYSQL_ROOT_PASSWORD: YourStrongMysqlPassword123!
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_ms3_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pYourStrongMysqlPassword123!"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  bloodflow-ms3:
+    build: .
+    container_name: bloodflow-ms3-api
+    restart: unless-stopped
+    depends_on:
+      mysql-ms3:
+        condition: service_healthy
+    ports:
+      - "8083:8083"
+    environment:
+      ASPNETCORE_URLS: "http://+:8083"
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Server=mysql-ms3;Port=3306;Database=bloodflow_ms3;User=root;Password=YourStrongMysqlPassword123!;"
+      MicroservicesUrls__MS1: "http://host.docker.internal:8081"
+      MicroservicesUrls__MS2: "http://host.docker.internal:8082"
+
+volumes:
+  mysql_ms3_data:

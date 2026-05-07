@@ -1,0 +1,58 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: bloodflow-auth-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/bloodflow_auth?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: "Ghadabanti04@"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=300s
+
+jwt:
+  secret: "bloodflow-secret-key-for-demo-change-this-later-123456789123456789"
+  issuer: "bloodflow-auth-service"
+  audience: "bloodflow-platform"
+  access-token-expiration-minutes: 60
+  refresh-token-expiration-days: 7
+
+bloodflow:
+  auth:
+    email-verification-enabled: false
+
+  admin:
+    email: admin@bloodflow.ma
+    password: Admin123@
+    first-name: Super
+    last-name: Admin
+
+  frontend:
+    base-url: http://localhost:5173
+
+cors:
+  allowed-origins:
+    - http://localhost:5173
+    - http://127.0.0.1:5173
+    - http://localhost:3000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
