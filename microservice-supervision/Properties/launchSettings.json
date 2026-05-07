@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "BloodFlow.MS3": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:54048;http://localhost:54049"
+    }
+  }
+}
